@@ -1,24 +1,18 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import useStore from '../store/InvestmentStore';
 
-export async function getInvestmentSuggestions(monthlyIncome, riskLevel) {
+export default async function getInvestmentSuggestions() {
+  const { monthlyIncome, riskLevel } = useStore.getState();
 
-    const { setStrategy } = useStore.getState();
   try {
     const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
-    
+    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
     const prompt = `
     You are a financial advisor AI.
     
-    Generate an investment strategy for a user who can invest ₹${income} per month and has a ${riskProfile} risk tolerance.
-    
-    The strategy must include the following allocation ranges:
-    - SIPs: 40% to 60%
-    - Crypto: 5% to 15%
-    - Gold: 10% to 20%
-    - Equity: Remaining amount
-    
+    Generate an investment strategy for a user who can invest ₹${monthlyIncome} per month and has a ${riskLevel} risk tolerance.
+
     Return the result in **pure JSON format only**. Do not include any explanations or markdown.
     
     Use this format:
@@ -36,12 +30,9 @@ export async function getInvestmentSuggestions(monthlyIncome, riskLevel) {
     const response = await result.response;
     const text = await response.text();
 
-    const cleaned = text.replace(/```json|```/g, '').trim();
-
-    const json = JSON.parse(cleaned);
-    setStrategy(json); 
-    console.log('Investment strategy:', json);
+    return text;
   } catch (error) {
     console.error('Error fetching strategy from Gemini:', error);
+    throw error; 
   }
 }

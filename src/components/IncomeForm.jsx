@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
 import { IndianRupee, AlertCircle } from 'lucide-react';
 import useStore from '../store/InvestmentStore';
-import { getInvestmentSuggestions } from '../services/gemini';
+import getInvestmentSuggestions from '../services/gemini';
 
 export function IncomeForm() {
-  const [income, setIncome] = useState('');
   const [loading, setLoading] = useState(false);
   
   const {
+    monthlyIncome,
     setMonthlyIncome,
     setInvestmentPlan,
     setError,
     riskLevel,
     setRiskLevel,
     addToHistory,
-    strategy
+    strategy,
+    setStrategy,
+
   } = useStore();
 
   const handleSubmit = async (e) => {
@@ -22,30 +24,31 @@ export function IncomeForm() {
     setLoading(true);
     setError(null);
   
-    const monthlyIncome = parseFloat(income);
     if (monthlyIncome < 1000) {
       setError('Monthly income must be at least ₹1,000');
       setLoading(false);
       return;
     }
   
-    setMonthlyIncome(monthlyIncome);
+    setMonthlyIncome(parseFloat(monthlyIncome));
+    setRiskLevel(riskLevel);
   
     try {
-      await getInvestmentSuggestions(monthlyIncome, riskLevel);
+        const response = await getInvestmentSuggestions();
+        const cleaned = response.replace(/```json|```/g, '').trim();
+        const json = JSON.parse(cleaned);
   
-      // Now that the strategy is updated in Zustand, directly check it
-      const { strategy } = useStore.getState();
-  
-      if (strategy && strategy.allocations) {
-        const plan = {};
-        strategy.allocations.forEach(item => {
-          const key = item.category.toLowerCase(); // e.g., 'sips', 'crypto'
-          plan[key] = Math.round((item.percentage / 100) * monthlyIncome);
-        });
-        setInvestmentPlan(plan);
-        addToHistory();
-      }
+        setStrategy(json);
+
+        if (strategy && strategy.allocations) {
+            const plan = {};
+            strategy.allocations.forEach(item => {
+              const key = item.category.toLowerCase();
+              plan[key] = Math.round((item.percentage / 100) * monthlyIncome);
+            });
+            setInvestmentPlan(plan);
+            addToHistory();
+          }
     } catch (error) {
       console.error(error);
       setError('Failed to get investment suggestions. Please try again.');
@@ -76,8 +79,8 @@ export function IncomeForm() {
           <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
           <input
             type="number"
-            value={income}
-            onChange={(e) => setIncome(e.target.value)}
+            value={monthlyIncome}
+            onChange={(e) => setMonthlyIncome(e.target.value)}
             placeholder="Enter your monthly income"
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             required
