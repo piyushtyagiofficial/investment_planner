@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export const useInvestmentStore = create(
+const useStore = create(
   persist(
     (set, get) => ({
       monthlyIncome: 0,
@@ -34,3 +34,5 @@ export const useInvestmentStore = create(
     }
   )
 );
+
+export default useStore;
