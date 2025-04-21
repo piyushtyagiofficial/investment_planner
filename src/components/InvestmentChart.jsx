@@ -16,7 +16,7 @@ export function InvestmentChart() {
     const { strategy } = useStore();
   
     if (!strategy || !strategy.allocations) {
-      return null; // or a loading indicator
+      return null; 
     }
   
     const chartData = {
@@ -39,14 +39,24 @@ export function InvestmentChart() {
             'rgba(75, 192, 192, 1)',
             'rgba(153, 102, 255, 1)',
           ],
-          borderWidth: 1,
+          borderWidth: 2,
         },
       ],
     };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+          },
+        },
+      };
   
     return (
-      <div className="w-full max-w-md">
-        <Pie data={chartData} />
+      <div className="w-full flex justify-center items-center h-[70%]">
+        <Pie data={chartData} options={options}/>
       </div>
     );
   }
