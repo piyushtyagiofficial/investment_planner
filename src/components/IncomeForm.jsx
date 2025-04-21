@@ -83,7 +83,7 @@ export function IncomeForm() {
               value={income}
               onChange={(e) => setIncome(e.target.value)}
               placeholder="Enter your monthly income"
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               min="1000"
             />
