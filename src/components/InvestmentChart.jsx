@@ -20,7 +20,7 @@ export function InvestmentChart() {
     }
   
     const chartData = {
-      labels: strategy.allocations.map(item => item.category),
+      labels: strategy.allocations.map(item => `${item.category} (%)`),
       datasets: [
         {
           data: strategy.allocations.map(item => item.percentage),
@@ -39,6 +39,7 @@ export function InvestmentChart() {
             'rgba(75, 192, 192, 1)',
             'rgba(153, 102, 255, 1)',
           ],
+
           borderWidth: 2,
         },
       ],
@@ -46,16 +47,27 @@ export function InvestmentChart() {
 
     const options = {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: {
+            display: true,
             position: 'bottom',
+            labels: {
+              padding: 15,
+            },
           },
         },
+        animation: {
+            animateRotate: true,     
+            animateScale: true,      
+            duration: 1000,          
+            easing: 'easeOutQuad' 
+          }
       };
+      
   
     return (
-      <div className="w-full flex justify-center items-center h-[70%]">
+      <div className="w-full flex justify-center items-center h-[500px]">
         <Pie data={chartData} options={options}/>
       </div>
     );

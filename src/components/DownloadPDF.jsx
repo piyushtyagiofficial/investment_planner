@@ -2,6 +2,7 @@ import React from 'react';
 import { Download } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import useStore from '../store/InvestmentStore';
+import { motion } from 'framer-motion';
 
 export function DownloadPDF() {
   const { monthlyIncome, riskLevel, strategy } = useStore();
@@ -9,47 +10,38 @@ export function DownloadPDF() {
   const handleDownload = () => {
     const doc = new jsPDF();
 
-    // Title
     doc.setFontSize(22);
     doc.setFont('helvetica', 'bold');
     doc.text('Personal Investment Plan', 20, 20);
 
-    // Line under the title for separation
     doc.setLineWidth(0.5);
     doc.line(20, 25, 190, 25);
 
-    // Basic Info
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
     doc.text(`Monthly Income: Rs. ${monthlyIncome}`, 20, 40);
     doc.text(`Risk Profile: ${riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1)}`, 20, 50);
 
-    // Investment Breakdown
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text('Investment Breakdown:', 20, 70);
 
-    // Investment Category List with Funds
-    let yPosition = 80;  
+    let yPosition = 80;
 
     strategy.allocations.forEach((item) => {
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.text(`${item.category}: Rs. ${Math.round((item.percentage / 100) * monthlyIncome)}`, 30, yPosition);
-      
 
-      // List the funds under each category with better spacing
       item.funds.forEach((fund, fundIndex) => {
         doc.setFontSize(12);
         doc.setFont('helvetica', 'normal');
         doc.text(`  - ${fund}`, 40, yPosition + (fundIndex + 1) * 10);
       });
 
-      // Update yPosition after each category
       yPosition += (item.funds.length + 1) * 10 + 20;
     });
 
-    // Recommendations
     doc.setFontSize(16);
     doc.setFont('helvetica', 'bold');
     doc.text('Investment Strategy Recommendations:', 20, yPosition);
@@ -70,22 +62,25 @@ export function DownloadPDF() {
       doc.text('- Maintain emergency fund despite aggressive strategy', 30, yPosition + 30);
     }
 
-    // Footer
     doc.setFontSize(10);
     doc.setFont('helvetica', 'italic');
     doc.text('Generated on: ' + new Date().toLocaleDateString(), 20, yPosition + 50);
 
-    // Save the PDF
     doc.save('investment-plan.pdf');
   };
 
   return (
-    <button
+    <motion.button
       onClick={handleDownload}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
       className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
     >
       <Download size={20} />
       Download Plan
-    </button>
+    </motion.button>
   );
 }
