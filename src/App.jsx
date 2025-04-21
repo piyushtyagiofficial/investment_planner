@@ -5,6 +5,7 @@ import './App.css'
 import { IncomeForm } from './components/IncomeForm'
 import { InvestmentChart } from './components/InvestmentChart'
 import { InvestmentHistory } from './components/InvestmentHistory'
+import { DownloadPDF } from './components/DownloadPDF'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,6 +15,7 @@ function App() {
       <IncomeForm/>
       <InvestmentChart/>
       <InvestmentHistory/>
+      <DownloadPDF/>
     </div>
   )
 }

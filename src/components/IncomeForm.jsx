@@ -39,16 +39,8 @@ export function IncomeForm() {
         const json = JSON.parse(cleaned);
   
         setStrategy(json);
+        addToHistory();
 
-        if (json && json.allocations) {
-            const plan = {};
-            json.allocations.forEach(item => {
-              const key = item.category.toLowerCase();
-              plan[key] = Math.round((item.percentage / 100) * income);
-            });
-            setInvestmentPlan(plan);
-            addToHistory();
-          }
     } catch (error) {
       console.error(error);
       setError('Failed to get investment suggestions. Please try again.');
