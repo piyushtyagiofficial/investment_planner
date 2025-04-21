@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { IncomeForm } from './components/IncomeForm'
 import { InvestmentChart } from './components/InvestmentChart'
+import { InvestmentHistory } from './components/InvestmentHistory'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,6 +13,7 @@ function App() {
     <div className=''>
       <IncomeForm/>
       <InvestmentChart/>
+      <InvestmentHistory/>
     </div>
   )
 }

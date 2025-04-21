@@ -13,6 +13,8 @@ export default async function getInvestmentSuggestions() {
     
     Generate an investment strategy for a user who can invest ₹${monthlyIncome} per month and has a ${riskLevel} risk tolerance.
 
+    Limit upto 5 categories of investment.
+
     Return the result in **pure JSON format only**. Do not include any explanations or markdown.
     
     Use this format:
@@ -22,6 +24,7 @@ export default async function getInvestmentSuggestions() {
         { "category": "Crypto", "percentage": 10, "funds": ["Bitcoin", "Ethereum"] },
         { "category": "Gold", "percentage": 15, "funds": ["SGBs", "Gold ETF"] },
         { "category": "Equity", "percentage": 25, "funds": ["Nifty 50", "Mid-cap Stocks"] }
+        { "category": "Bonds", "percentage": 10, "funds": ["Government Bonds", "Corporate Bonds"] }
       ]
     }
     `;

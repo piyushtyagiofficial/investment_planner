@@ -16,18 +16,22 @@ const useStore = create((set, get) => ({
   setMonthlyIncome: (income) => set({ monthlyIncome: income }),
   setRiskLevel: (level) => set({ riskLevel: level }),
   setInvestmentPlan: (plan) => set({ investmentPlan: plan }),
-  addToHistory: () =>
-    set((state) => ({
-      history: [
-        ...state.history,
-        {
-          date: new Date().toISOString(),
-          income: state.monthlyIncome,
-          plan: state.investmentPlan,
-          riskLevel: state.riskLevel,
-        },
-      ],
-    })),
+  addToHistory: () => {
+    const { monthlyIncome, riskLevel, strategy, history } = get();
+    if (strategy) {
+      set({
+        history: [
+          {
+            date: new Date().toLocaleString('en-IN'),
+            monthlyIncome,
+            riskLevel,
+            strategy
+          },
+          ...history,
+        ]
+      });
+    }
+  },
   setError: (error) => set({ error }),
 }));
 
