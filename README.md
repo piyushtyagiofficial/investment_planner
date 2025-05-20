@@ -34,7 +34,7 @@ A modern, interactive React app that generates personalized investment strategie
 
 1. **Clone the repository**
     ```
-    git clone https://github.com/your-username/investment_planner.git
+    git clone https://github.com/piyushtyagiofficial/investment_planner.git
     cd investment_planner
     ```
 
