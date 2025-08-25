@@ -19,7 +19,7 @@ export function DownloadPDF() {
 
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Monthly Income: Rs. ${monthlyIncome}`, 20, 40);
+    doc.text(`Monthly Savings: Rs. ${monthlyIncome}`, 20, 40);
     doc.text(`Risk Profile: ${riskLevel.charAt(0).toUpperCase() + riskLevel.slice(1)}`, 20, 50);
 
     doc.setFontSize(16);

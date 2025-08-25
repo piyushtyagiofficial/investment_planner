@@ -40,7 +40,7 @@ export function InvestmentHistory() {
               </span>
             </div>
             <p className="text-sm font-medium text-gray-700 mb-2">
-              Monthly Income: <span className="font-bold">₹{entry.monthlyIncome}</span>
+              Monthly Savings: <span className="font-bold">₹{entry.monthlyIncome}</span>
             </p>
             <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm text-gray-700 mt-2">
               {entry.strategy?.allocations?.map(item => (

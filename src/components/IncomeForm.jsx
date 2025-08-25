@@ -25,7 +25,7 @@ export function IncomeForm() {
     setError(null);
 
     if (income < 1000) {
-      setError('Monthly income must be at least ₹1,000');
+      setError('Monthly Savings must be at least ₹1,000');
       setLoading(false);
       return;
     }
