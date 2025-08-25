@@ -75,14 +75,14 @@ export function IncomeForm() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Income</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Monthly Savings</label>
           <div className="relative">
             <IndianRupee className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
             <input
               type="number"
               value={income}
               onChange={(e) => setIncome(e.target.value)}
-              placeholder="Enter your monthly income"
+              placeholder="Enter your monthly savings"
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
               min="1000"
